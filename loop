@@ -1,0 +1,59 @@
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  current = digitalRead(recPin);
+  // if the button state changes to pressed, remember the start time
+  if (current == LOW && previous == HIGH && (millis() - firstTime) > 200) {
+    firstTime = millis();
+  }
+
+  millis_held = (millis() - firstTime);
+  secs_held = millis_held / 1000;
+  digitalWrite(transPin, LOW); // IR transmitter 
+  delay(30);
+  digitalWrite(transPin, HIGH);
+  delay(30); // IR sensor flashes to maintain signal - signal lost if it is consistent
+  digitalRead(recPin); // IR receiver
+  //Serial.println(digitalRead(recPin));
+
+
+  if (x == 0) {
+    if (millis_held >= 1000) {               // millis_held = how long IR receiver is HIGH, i.e. when IR is blocked
+      Serial.println("x =");
+      Serial.println(x);
+    }
+    else {
+      x++;
+    }
+  }
+
+
+  if (x == 1) {
+    if (millis_held >= 500) {
+      Serial.println("x =");
+      Serial.println(x);
+      x++;
+    }
+    else {
+      music.play("Sheik.wav");
+      Serial.println("x =");
+      Serial.println(x);
+    }
+  }
+
+
+  if (x == 2) {
+    if (millis_held >= 500) {
+      Serial.println("x =");
+      Serial.println(x);
+      x++;
+    }
+    else {
+      music.play("Zelda.wav");
+      Serial.println("x =");
+      Serial.println(x);
+    }
+  }
+
+
+}
